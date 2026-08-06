@@ -1,0 +1,286 @@
+---
+// ComponentePadres.astro
+---
+
+<section class="relative w-full py-12 px-6 overflow-hidden">
+
+    <!-- Imagen de hojas de fondo (izquierda) -->
+    <div class="absolute top-[35%] -left-10 sm:-left-12 md:-left-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0 pointer-events-none">
+        <img
+            src="/imagenes/hojas.png"
+            alt="Hojas decorativas"
+            class="w-full h-auto object-contain"
+            style="opacity: 0.25;"
+        />
+    </div>
+
+    <!-- Imagen de hojas de fondo (derecha, a la altura de los padrinos de civil) -->
+    <div class="absolute top-[82%] -right-10 sm:-right-12 md:-right-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0 pointer-events-none">
+        <img
+            src="/imagenes/hojas.png"
+            alt="Hojas decorativas"
+            class="w-full h-auto object-contain scale-x-[-1]"
+            style="opacity: 0.25;"
+        />
+    </div>
+
+    <div class="relative max-w-2xl mx-auto z-10 flex flex-col items-center">
+
+        <!-- Título principal -->
+        <div id="titulo-bendicion" class="text-center mb-3">
+            <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.15em] leading-relaxed">
+                CON LA BENDICIÓN DE DIOS<br />
+                Y DE NUESTROS PADRES
+            </p>
+        </div>
+
+        <!-- Divisor ornamental -->
+        <div class="flex items-center justify-center gap-4 mb-10">
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-r from-transparent to-[#810100]/70"></span>
+            <span class="text-[#810100] text-sm leading-none">&#10070;</span>
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-l from-transparent to-[#810100]/70"></span>
+        </div>
+
+        <!-- PADRES DE LA NOVIA -->
+        <div id="padres-novia" class="relative z-10 w-full mb-9">
+            <!-- Título "Padres de la Novia" -->
+            <div class="text-center mb-3">
+                <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#810100] tracking-wide whitespace-nowrap">
+                    Padres de la Novia
+                </h3>
+            </div>
+
+            <!-- Nombres de los padres de la novia -->
+            <div class="text-center space-y-2">
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    ANTONIO GARCÍA
+                </p>
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    ELSA ROMERO
+                </p>
+            </div>
+        </div>
+
+        <!-- Separador entre familias -->
+        <div class="flex items-center justify-center gap-3 mb-9">
+            <span class="block w-10 sm:w-14 h-px bg-gradient-to-r from-transparent to-[#810100]/60"></span>
+            <span class="w-1.5 h-1.5 rotate-45 bg-[#0058A8]"></span>
+            <span class="block w-10 sm:w-14 h-px bg-gradient-to-l from-transparent to-[#810100]/60"></span>
+        </div>
+
+        <!-- PADRES DEL NOVIO -->
+        <div id="padres-novio" class="relative z-10 w-full">
+            <!-- Título "Padres del Novio" -->
+            <div class="text-center mb-3">
+                <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#810100] tracking-wide whitespace-nowrap">
+                    Padres del Novio
+                </h3>
+            </div>
+
+            <!-- Nombres de los padres del novio -->
+            <div class="text-center space-y-2">
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    MARCELO ZAMORANO
+                </p>
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    GABRIELA MIRANDA
+                </p>
+            </div>
+        </div>
+
+        <!-- Separador antes de los padrinos -->
+        <div class="flex items-center justify-center gap-3 my-9">
+            <span class="block w-10 sm:w-14 h-px bg-gradient-to-r from-transparent to-[#810100]/60"></span>
+            <span class="w-1.5 h-1.5 rotate-45 bg-[#0058A8]"></span>
+            <span class="block w-10 sm:w-14 h-px bg-gradient-to-l from-transparent to-[#810100]/60"></span>
+        </div>
+
+        <!-- PADRINOS -->
+        <div id="padrinos" class="w-full">
+            <!-- Nombres de los padrinos -->
+            <div class="text-center space-y-2">
+                <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#810100] tracking-wide whitespace-nowrap !mb-3">
+                    Padrinos de Religión
+                </h3>
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    ARMANDO GARVIZU
+                </p>
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    MARTHA MALDONADO
+                </p>
+
+                <div class="flex items-center justify-center gap-3 !my-5">
+                    <span class="block w-10 sm:w-14 h-px bg-gradient-to-r from-transparent to-[#810100]/60"></span>
+                    <span class="w-1.5 h-1.5 rotate-45 bg-[#0058A8]"></span>
+                    <span class="block w-10 sm:w-14 h-px bg-gradient-to-l from-transparent to-[#810100]/60"></span>
+                </div>
+
+                <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#810100] tracking-wide whitespace-nowrap !mb-3">
+                    Padrinos de Civil
+                </h3>
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    LUIS MÉNDEZ
+                </p>
+                <p class="text-[#0058A8] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em]">
+                    GABRIELA PEREDO
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🎊 Iniciando animaciones de padres...");
+
+        // ═══ TÍTULO "CON LA BENDICIÓN DE DIOS" ═══
+        gsap.fromTo(
+            "#titulo-bendicion",
+            { opacity: 0, y: -30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#titulo-bendicion",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+
+        // ═══ PADRES DEL NOVIO ═══
+        gsap.fromTo(
+            "#padres-novio h3",
+            { opacity: 0, scale: 0.8 },
+            {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.4)",
+                scrollTrigger: {
+                    trigger: "#padres-novio",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.3
+            }
+        );
+
+        gsap.fromTo(
+            "#padres-novio .space-y-2 p",
+            { opacity: 0, x: 30 },
+            {
+                opacity: 1,
+                x: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#padres-novio",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.6
+            }
+        );
+
+        // ═══ PADRES DE LA NOVIA ═══
+        gsap.fromTo(
+            "#padres-novia h3",
+            { opacity: 0, scale: 0.8 },
+            {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.4)",
+                scrollTrigger: {
+                    trigger: "#padres-novia",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.3
+            }
+        );
+
+        gsap.fromTo(
+            "#padres-novia .space-y-2 p",
+            { opacity: 0, x: -30 },
+            {
+                opacity: 1,
+                x: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#padres-novia",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.6
+            }
+        );
+
+        // ═══ PADRINOS ═══
+        gsap.fromTo(
+            "#padrinos h3",
+            { opacity: 0, scale: 0.8 },
+            {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.4)",
+                scrollTrigger: {
+                    trigger: "#padrinos",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.3
+            }
+        );
+
+        gsap.fromTo(
+            "#padrinos .space-y-2 p",
+            { opacity: 0, y: 20 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.2,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#padrinos",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.6
+            }
+        );
+
+        console.log("✨ Animaciones de padres completadas!");
+    });
+</script>
+
+<style>
+    /* Transiciones suaves */
+    section h3:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    section p:hover {
+        color: #810100;
+        transition: color 0.3s ease;
+    }
+</style>

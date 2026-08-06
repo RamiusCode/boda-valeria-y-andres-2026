@@ -1,0 +1,212 @@
+---
+// ComponenteSugerenciaRegalo.astro
+---
+
+<section class="relative bg-[#810100] w-full py-16 px-6">
+    
+    <div class="max-w-2xl mx-auto">
+        
+        <!-- Título "Sugerencia de Regalo" -->
+        <div id="titulo-regalo" class="text-center mb-3">
+            <h3 class="font-great-vibes text-5xl sm:text-6xl md:text-7xl text-[#DCDEDB] tracking-wide leading-tight">
+                Sugerencia de Regalo
+            </h3>
+        </div>
+
+        <!-- Divisor ornamental -->
+        <div id="divisor-regalo" class="flex items-center justify-center gap-4 mb-8">
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-r from-transparent to-[#DCDEDB]"></span>
+            <span class="text-[#DCDEDB] text-sm leading-none">&#10070;</span>
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-l from-transparent to-[#DCDEDB]"></span>
+        </div>
+
+        <!-- Texto explicativo -->
+        <!-- <div id="texto-explicativo" class="text-center mb-10">
+            <p class="text-white text-xs sm:text-sm md:text-base font-serif leading-relaxed">
+                SI DESEAS HACERNOS UN OBSEQUIO, AGRADECERÍAMOS<br />
+                DE CORAZÓN UNA CONTRIBUCIÓN PARA NUESTRA<br />
+                LUNA DE MIEL Y COMENZAR ESTA NUEVA ETAPA.
+            </p>
+        </div> -->
+
+        <div id="texto-explicativo" class="text-center mb-10">
+    <p class="text-white text-xs sm:text-sm md:text-base font-serif leading-relaxed">
+        SI DESEAS HACERNOS UN OBSEQUIO, AGRADECEMOS<br />
+        DE CORAZÓN UNA CONTRIBUCIÓN PARA NUESTRO<br />
+        HOGAR
+    </p>
+</div>
+
+
+        <!-- Tarjeta de Sobre (Efectivo) -->
+        <div id="tarjeta-sobre" class="relative bg-transparent border border-white/60 rounded-3xl p-8 mb-6 overflow-hidden">
+            <span class="pointer-events-none absolute inset-3 border border-[#DCDEDB]/30 rounded-2xl"></span>
+            <div class="relative flex flex-col items-center text-center">
+                <!-- Icono de sobre -->
+                <div class="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                    <img
+                        src="/imagenes/sobre.png"
+                        alt="Efectivo en sobre"
+                        class="w-full h-full object-contain"
+                        style="filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);"
+                    />
+                </div>
+                <!-- Texto -->
+                <p class="text-white text-sm sm:text-base font-serif uppercase tracking-wider">
+                    EFECTIVO EN SOBRE<br />
+                    (HABRÁ UN BUZÓN)
+                </p>
+            </div>
+        </div>
+
+        <!-- Tarjeta de QR (Cuenta Bancaria) -->
+ <div id="tarjeta-qr" class="relative bg-transparent border border-white/60 rounded-3xl p-8 overflow-hidden">
+    <span class="pointer-events-none absolute inset-3 border border-[#DCDEDB]/30 rounded-2xl"></span>
+    <div class="relative flex flex-col items-center text-center">
+        <!-- Nombre del Banco -->
+        <h3 class="text-white text-lg sm:text-xl font-serif uppercase tracking-[0.15em] mb-4">
+            Banco Ganadero S.A.
+        </h3>
+
+        <!-- Icono de QR -->
+        <div class="w-40 h-40 sm:w-40 sm:h-40 mb-4 bg-white rounded-lg p-2">
+            <img
+                src="/imagenes/qr.png"
+                alt="Código QR"
+                class="w-full h-full object-contain"
+            />
+        </div>
+
+        <!-- Titular de la cuenta -->
+        <p class="text-white text-sm sm:text-base font-serif tracking-[0.1em]">
+            Omar Pérez Mendoza
+        </p>
+    </div>
+</div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🎁 Iniciando animaciones de sugerencia de regalo...");
+
+        // ═══ TÍTULO "SUGERENCIA DE REGALO" ═══
+        gsap.fromTo(
+            "#titulo-regalo",
+            { opacity: 0, y: -30 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#titulo-regalo",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            }
+        );
+
+        // ═══ DIVISOR ORNAMENTAL ═══
+        gsap.fromTo(
+            "#divisor-regalo",
+            { opacity: 0, scaleX: 0.4 },
+            {
+                opacity: 1,
+                scaleX: 1,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: { trigger: "#titulo-regalo", start: "top 80%", toggleActions: "play none none reverse" },
+                delay: 0.2
+            }
+        );
+
+        // ═══ TEXTO EXPLICATIVO ═══
+        gsap.fromTo(
+            "#texto-explicativo",
+            { opacity: 0, y: 20 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#texto-explicativo",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.3
+            }
+        );
+
+        // ═══ TARJETA DE SOBRE ═══
+        gsap.fromTo(
+            "#tarjeta-sobre",
+            { opacity: 0, x: -50, scale: 0.9 },
+            {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.4)",
+                scrollTrigger: {
+                    trigger: "#tarjeta-sobre",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.5
+            }
+        );
+
+        // ═══ TARJETA DE QR ═══
+        gsap.fromTo(
+            "#tarjeta-qr",
+            { opacity: 0, x: 50, scale: 0.9 },
+            {
+                opacity: 1,
+                x: 0,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.4)",
+                scrollTrigger: {
+                    trigger: "#tarjeta-qr",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                delay: 0.7
+            }
+        );
+
+        console.log("✨ Animaciones de sugerencia de regalo completadas!");
+    });
+</script>
+
+<style>
+    /* Transiciones suaves en las tarjetas */
+    #tarjeta-sobre,
+    #tarjeta-qr {
+        transition: all 0.3s ease;
+    }
+
+    #tarjeta-sobre:hover,
+    #tarjeta-qr:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Efecto hover en el título */
+    #titulo-regalo:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+</style>
