@@ -1,0 +1,165 @@
+---
+// ComponenteSugerenciaRegalo.astro
+
+// Número de WhatsApp y mensaje predeterminado
+const whatsapp = "59173799479";
+const mensaje =
+    "Hola, por favor quisiera la sugerencia de regalos para los novios Valeria y Andrés. ¡Muchas gracias!";
+const enlaceWhatsapp = `https://wa.me/${whatsapp}?text=${encodeURIComponent(mensaje)}`;
+---
+
+<section class="relative bg-[#810100] w-full py-16 px-6">
+
+    <div class="max-w-2xl mx-auto flex flex-col items-center text-center">
+
+        <!-- Título "Sugerencia de Regalo" -->
+        <div id="titulo-regalo" class="mb-2">
+            <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#DCDEDB] tracking-wide whitespace-nowrap">
+                Sugerencia de Regalo
+            </h3>
+        </div>
+
+        <!-- Divisor ornamental -->
+        <div id="divisor-regalo" class="flex items-center justify-center gap-4 mb-7">
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-r from-transparent to-[#DCDEDB]"></span>
+            <span class="text-[#DCDEDB] text-sm leading-none">&#10070;</span>
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-l from-transparent to-[#DCDEDB]"></span>
+        </div>
+
+        <!-- Ícono de regalo -->
+        <div id="icono-regalo" class="mb-7 flex justify-center">
+            <div
+                role="img"
+                aria-label="Regalo"
+                class="w-20 h-20 sm:w-24 sm:h-24"
+                style="background-color: #DCDEDB; -webkit-mask: url('/imagenes/regalo.png') center / contain no-repeat; mask: url('/imagenes/regalo.png') center / contain no-repeat;"
+            ></div>
+        </div>
+
+        <!-- Texto explicativo -->
+        <div id="texto-explicativo" class="mb-8 max-w-md">
+            <p class="text-white text-sm sm:text-base md:text-lg font-serif tracking-[0.08em] leading-relaxed">
+                El mejor regalo es tu presencia, pero si deseas tener un detalle
+                con nosotros, te dejamos esta opción
+            </p>
+        </div>
+
+        <!-- Logo de la tienda -->
+        <div id="logo-regalo" class="mb-8 w-full max-w-xs">
+            <div class="bg-white rounded-2xl px-5 py-4 shadow-lg">
+                <img
+                    src="/imagenes/logo.png"
+                    alt="Nuestra Boda HomeStore"
+                    class="w-full h-auto object-contain"
+                />
+            </div>
+        </div>
+
+        <!-- Indicación para el botón -->
+        <div id="texto-boton" class="mb-5 max-w-sm">
+            <p class="text-[#DCDEDB] text-xs sm:text-sm font-serif uppercase tracking-[0.2em] leading-relaxed">
+                Por favor, presiona el botón para ponerte en contacto
+            </p>
+        </div>
+
+        <!-- Botón de WhatsApp -->
+        <div id="boton-regalo">
+            <a
+                href={enlaceWhatsapp}
+                target="_blank"
+                rel="noopener"
+                class="group relative inline-block bg-[#DCDEDB] text-[#810100] px-10 py-3.5 rounded-lg text-sm sm:text-base font-serif uppercase tracking-[0.2em] hover:bg-white hover:-translate-y-0.5 transition-all duration-300 shadow-md hover:shadow-lg"
+            >
+                <span class="pointer-events-none absolute inset-1.5 rounded border border-[#810100]/30 transition-all duration-300 group-hover:inset-[7px]"></span>
+                <span class="relative">Ver sugerencias</span>
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🎁 Iniciando animaciones de sugerencia de regalo...");
+
+        const st = { trigger: "#titulo-regalo", start: "top 85%", toggleActions: "play none none reverse" };
+
+        // ═══ TÍTULO ═══
+        gsap.fromTo(
+            "#titulo-regalo",
+            { opacity: 0, y: -30 },
+            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", scrollTrigger: st }
+        );
+
+        // ═══ DIVISOR ORNAMENTAL ═══
+        gsap.fromTo(
+            "#divisor-regalo",
+            { opacity: 0, scaleX: 0.4 },
+            { opacity: 1, scaleX: 1, duration: 0.8, ease: "power2.out", scrollTrigger: st, delay: 0.25 }
+        );
+
+        // ═══ ÍCONO DE REGALO ═══
+        gsap.fromTo(
+            "#icono-regalo",
+            { opacity: 0, scale: 0.5, rotation: -10 },
+            { opacity: 1, scale: 1, rotation: 0, duration: 0.9, ease: "back.out(1.7)", scrollTrigger: st, delay: 0.45 }
+        );
+
+        // ═══ TEXTO EXPLICATIVO ═══
+        gsap.fromTo(
+            "#texto-explicativo",
+            { opacity: 0, y: 25 },
+            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", scrollTrigger: st, delay: 0.7 }
+        );
+
+        // ═══ LOGO ═══
+        gsap.fromTo(
+            "#logo-regalo",
+            { opacity: 0, scale: 0.85 },
+            { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.4)", scrollTrigger: st, delay: 0.95 }
+        );
+
+        // ═══ INDICACIÓN DEL BOTÓN ═══
+        gsap.fromTo(
+            "#texto-boton",
+            { opacity: 0, y: 15 },
+            { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", scrollTrigger: st, delay: 1.15 }
+        );
+
+        // ═══ BOTÓN ═══
+        gsap.fromTo(
+            "#boton-regalo",
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.7, ease: "power2.out", scrollTrigger: st, delay: 1.35 }
+        );
+
+        console.log("✨ Animaciones de sugerencia de regalo completadas!");
+    });
+</script>
+
+<style>
+    .font-great-vibes {
+        font-family: "Great Vibes", cursive;
+    }
+
+    #boton-regalo a:active {
+        transform: scale(0.97);
+    }
+
+    #logo-regalo > div {
+        transition: transform 0.3s ease;
+    }
+
+    #logo-regalo > div:hover {
+        transform: translateY(-4px);
+    }
+</style>

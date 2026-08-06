@@ -1,7 +1,21 @@
 ---
 // ComponentePase.astro - Pases asignados
-const pases = 2;
-const mensaje = "Esperamos contar con la presencia de ambos";
+export interface Props {
+    pases?: number;
+    mensaje?: string;
+}
+
+const { pases = 2, mensaje } = Astro.props;
+
+// El mensaje se adapta a la cantidad de pases (se puede sobrescribir con la prop "mensaje")
+const mensajePorDefecto =
+    pases === 1
+        ? "Esperamos contar con tu presencia"
+        : pases === 2
+          ? "Esperamos contar con la presencia de ambos"
+          : "Esperamos contar con la presencia de todos";
+
+const textoMensaje = mensaje ?? mensajePorDefecto;
 ---
 
 <section class="relative bg-white w-full py-2">
@@ -65,7 +79,7 @@ const mensaje = "Esperamos contar con la presencia de ambos";
 
                 <!-- Mensaje -->
                 <p id="texto-honor" class="mt-6 font-great-vibes text-white text-[clamp(1.5rem,6.5vw,2.1rem)] leading-snug">
-                    {mensaje}
+                    {textoMensaje}
                 </p>
 
                 <!-- Avatares -->
