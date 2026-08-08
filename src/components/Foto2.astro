@@ -1,0 +1,42 @@
+---
+// Foto2.astro
+---
+
+<section id="foto2" class="relative w-full overflow-hidden">
+
+    <div class="relative w-fit max-w-full mx-auto">
+        <img
+            id="imagen-foto2"
+            src="/imagenes/foto2.webp"
+            alt="Foto de los novios"
+            class="max-w-full h-auto"
+        />
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIÓN CON GSAP                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const stF2 = { trigger: "#foto2", start: "top 80%", toggleActions: "play none none reverse" };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        gsap.fromTo(
+            "#imagen-foto2",
+            { opacity: 0, y: 40 },
+            { opacity: 1, y: 0, duration: 1, ease: "power2.out", scrollTrigger: stF2 }
+        );
+    });
+</script>
+
+<style>
+    img {
+        display: block;
+    }
+</style>
