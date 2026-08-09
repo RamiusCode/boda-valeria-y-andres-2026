@@ -1,4 +1,4 @@
-﻿---
+---
 // NombresFlores.astro (ComponenteInvitacion.astro)
 ---
 
@@ -70,19 +70,16 @@
     <!-- Imagen Principal con desvanecimiento -->
     <div class="relative w-full">
         <!-- Imagen principal -->
-        <div class="relative w-full h-[380px] sm:h-[460px] md:h-[520px]">
+        <div class="relative w-fit max-w-full mx-auto">
             <img
                 id="imagen-principal"
                 src="/imagenes/foto1.webp"
                 alt="Foto de los novios"
-                class="w-full h-full object-cover"
+                class="max-w-full h-auto"
             />
 
             <!-- Viñeta superior sutil para dar profundidad -->
             <div class="pointer-events-none absolute top-0 left-0 w-full h-28 bg-gradient-to-b from-black/15 to-transparent"></div>
-
-            <!-- Marco interior fino dorado -->
-            <div class="pointer-events-none absolute inset-4 sm:inset-6 border border-white/40"></div>
 
             <!-- Degradado de desvanecimiento -->
             <div id="degradado" class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"></div>
@@ -116,7 +113,7 @@
         <!-- Hojas decorativas a la izquierda -->
         <div id="hojas-izquierda" class="absolute top-1/2 -left-10 sm:-left-12 md:-left-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0 pointer-events-none">
             <img
-                src="/imagenes/hojas.webp"
+                src="/imagenes/hojas.png"
                 alt="Hojas decorativas"
                 class="w-full h-auto object-contain"
                 style="opacity: 0.25;"

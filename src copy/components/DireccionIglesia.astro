@@ -1,26 +1,24 @@
-﻿---
-// ComponenteCeremonia.astro
+---
+// ComponenteCeremonia.astro (Ceremonia Religiosa)
 ---
 
 <section class="relative bg-white w-full py-4 px-6 overflow-hidden">
 
-    <!-- Hojas decorativas a la derecha -->
-    <div class="pointer-events-none absolute top-1/2 -right-10 sm:-right-12 md:-right-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0">
+    <!-- Hojas decorativas a la izquierda -->
+    <div class="pointer-events-none absolute top-1/2 -left-10 sm:-left-12 md:-left-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0">
         <img
-            src="/imagenes/hojas.webp"
+            src="/imagenes/hojas.png"
             alt="Hojas decorativas"
-            class="w-full h-auto object-contain scale-x-[-1]"
+            class="w-full h-auto object-contain"
             style="opacity: 0.25;"
-                loading="lazy"
-                decoding="async"
-            />
+        />
     </div>
 
     <div class="relative z-10 max-w-md mx-auto">
-        
+
         <!-- Tarjeta con borde redondeado -->
         <div
-            id="ceremonia-card"
+            id="iglesia-card"
             class="relative border border-[#810100]/60 rounded-3xl p-8 sm:p-10 bg-white shadow-lg text-center overflow-hidden"
         >
 
@@ -29,10 +27,10 @@
 
             <div class="relative">
 
-                <!-- Título "Recepción" -->
-                <div id="titulo-ceremonia" class="mb-2">
+                <!-- Título "Ceremonia Religiosa" -->
+                <div id="iglesia-titulo" class="mb-2">
                     <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#810100] tracking-wide whitespace-nowrap">
-                        Recepción Social
+                        Ceremonia Religiosa
                     </h3>
                 </div>
 
@@ -43,33 +41,34 @@
                     <span class="block w-10 sm:w-14 h-px bg-gradient-to-l from-transparent to-[#810100]/70"></span>
                 </div>
 
-                <!-- Icono de recepción -->
-                <div id="icono-iglesia" class="mb-5 flex justify-center">
+                <!-- Icono de iglesia -->
+                <div id="iglesia-icono" class="mb-5 flex justify-center">
                     <div class="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                        <div role="img" aria-label="Recepción" class="w-full h-full" style="background-color: #810100; -webkit-mask: url('/imagenes/recepcion.png') center / contain no-repeat; mask: url('/imagenes/recepcion.png') center / contain no-repeat;"></div>
+                        <div role="img" aria-label="Iglesia" class="w-full h-full" style="background-color: #810100; -webkit-mask: url('/imagenes/iglesia.png') center / contain no-repeat; mask: url('/imagenes/iglesia.png') center / contain no-repeat;"></div>
                     </div>
                 </div>
 
-                <!-- Nombre del salón -->
-                <div id="nombre-salon" class="mb-5">
+                <!-- Nombre de la iglesia -->
+                <div id="iglesia-nombre" class="mb-5">
                     <p class="text-[#810100] text-sm sm:text-base md:text-lg font-serif tracking-[0.12em] leading-snug">
-                        SALÓN<br />“VILLA BONITA”
+                        IGLESIA<br />“COMPAÑÍA DE JESÚS”
                     </p>
                 </div>
 
                 <!-- Hora -->
-                <div id="hora-ceremonia" class="mb-6">
+                <div id="iglesia-hora" class="mb-6">
                     <p class="text-sm sm:text-base md:text-lg text-[#1B1717] uppercase tracking-[0.25em] font-serif mb-2">Hora</p>
                     <p class="text-[#810100] text-[clamp(1.35rem,5.5vw,1.8rem)] font-serif tracking-wide leading-none">
-                        16:00
+                        13:00
                     </p>
                 </div>
 
                 <!-- Botón "VER UBICACIÓN" -->
-                <div id="boton-ubicacion">
+                <div id="iglesia-boton">
                     <a
-                        href="https://maps.app.goo.gl/CWArYtACX73rYGC5A"
+                        href="https://maps.app.goo.gl/xat9zTaZuzUheb6BA"
                         target="_blank"
+                        rel="noopener"
                         class="group relative inline-block bg-[#810100] text-white px-9 py-3 rounded-lg text-sm sm:text-base font-serif uppercase tracking-[0.2em] hover:bg-[#5C0100] transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
                     >
                         <span class="pointer-events-none absolute inset-1.5 rounded border border-white/30 transition-all duration-300 group-hover:inset-[7px]"></span>
@@ -95,140 +94,75 @@
     gsap.registerPlugin(ScrollTrigger);
 
     document.addEventListener("DOMContentLoaded", () => {
-        console.log("⛪ Iniciando animaciones de ceremonia...");
+        console.log("⛪ Iniciando animaciones de ceremonia religiosa...");
+
+        const st = { trigger: "#iglesia-card", start: "top 80%", toggleActions: "play none none reverse" };
 
         // ═══ TARJETA PRINCIPAL ═══
         gsap.fromTo(
-            "#ceremonia-card",
+            "#iglesia-card",
             { opacity: 0, scale: 0.8, y: 50 },
-            {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                duration: 1,
-                ease: "back.out(1.4)",
-                scrollTrigger: {
-                    trigger: "#ceremonia-card",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                }
-            }
+            { opacity: 1, scale: 1, y: 0, duration: 1, ease: "back.out(1.4)", scrollTrigger: st }
         );
 
         // ═══ ICONO DE IGLESIA ═══
         gsap.fromTo(
-            "#icono-iglesia",
+            "#iglesia-icono",
             { opacity: 0, scale: 0.5, rotation: -10 },
-            {
-                opacity: 1,
-                scale: 1,
-                rotation: 0,
-                duration: 0.8,
-                ease: "back.out(1.7)",
-                scrollTrigger: {
-                    trigger: "#ceremonia-card",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                },
-                delay: 0.3
-            }
+            { opacity: 1, scale: 1, rotation: 0, duration: 0.8, ease: "back.out(1.7)", scrollTrigger: st, delay: 0.3 }
         );
 
-        // ═══ TÍTULO "CEREMONIA RELIGIOSA" ═══
+        // ═══ TÍTULO ═══
         gsap.fromTo(
-            "#titulo-ceremonia",
+            "#iglesia-titulo",
             { opacity: 0, y: -20 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: "#ceremonia-card",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                },
-                delay: 0.6
-            }
+            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", scrollTrigger: st, delay: 0.6 }
         );
 
         // ═══ HORA ═══
         gsap.fromTo(
-            "#hora-ceremonia",
+            "#iglesia-hora",
             { opacity: 0, scale: 0.7 },
-            {
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                ease: "back.out(1.5)",
-                scrollTrigger: {
-                    trigger: "#ceremonia-card",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                },
-                delay: 0.9
-            }
+            { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.5)", scrollTrigger: st, delay: 0.9 }
         );
 
-        // ═══ NOMBRE DEL SALÓN ═══
+        // ═══ NOMBRE DE LA IGLESIA ═══
         gsap.fromTo(
-            "#nombre-salon",
+            "#iglesia-nombre",
             { opacity: 0, y: 20 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: "#ceremonia-card",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                },
-                delay: 1.2
-            }
+            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", scrollTrigger: st, delay: 1.2 }
         );
 
         // ═══ BOTÓN "VER UBICACIÓN" ═══
         gsap.fromTo(
-            "#boton-ubicacion",
+            "#iglesia-boton",
             { opacity: 0, y: 20 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: "#ceremonia-card",
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
-                },
-                delay: 1.5
-            }
+            { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", scrollTrigger: st, delay: 1.5 }
         );
 
-        console.log("✨ Animaciones de ceremonia completadas!");
+        console.log("✨ Animaciones de ceremonia religiosa completadas!");
     });
 </script>
 
 <style>
     /* Transiciones suaves en la tarjeta */
-    #ceremonia-card {
+    #iglesia-card {
         transition: all 0.3s ease;
     }
 
-    #ceremonia-card:hover {
+    #iglesia-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
     /* Efecto hover en el título */
-    #titulo-ceremonia:hover {
+    #iglesia-titulo:hover {
         transform: scale(1.05);
         transition: transform 0.3s ease;
     }
 
     /* Animación del botón */
-    #boton-ubicacion a:active {
+    #iglesia-boton a:active {
         transform: scale(0.95);
     }
 </style>

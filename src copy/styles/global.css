@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════ */
+/* 🎨 PALETA DE LA INVITACIÓN (colores.jpeg)                   */
+/*    Cherry Red · Light Grey · Noir Black                     */
+/* ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Cherry Red #810100 — color principal */
+  --rojo: #810100;
+  --rojo-oscuro: #5C0100;  /* hover / profundidad */
+  --rojo-suave: rgba(129, 1, 0, 0.30);
+
+  /* Light Grey #DCDEDB — fondos y acentos sobre rojo */
+  --gris-claro: #DCDEDB;
+  --gris-suave: #F2F3F1;
+
+  /* Noir Black #1B1717 — textos */
+  --negro: #1B1717;
+  --negro-suave: #3A3333;   /* texto secundario */
+}
+
+/* Utilidades rápidas por si se necesitan en el markup */
+.text-rojo { color: var(--rojo); }
+.bg-rojo { background-color: var(--rojo); }
+.border-rojo { border-color: var(--rojo); }
+.text-negro { color: var(--negro); }
+.bg-gris { background-color: var(--gris-claro); }
+
+/* Selección de texto en rojo cereza */
+::selection {
+  background-color: var(--rojo);
+  color: #fff;
+}
+
+/* Para el nombre */
+.font-great-vibes {
+  font-family: 'Great Vibes', cursive !important;
+}
+
+/* Para mis XV años */
+.font-crimson {
+  font-family: 'Crimson Text', serif !important;
+}
+
+/* Para dedicatoria*/
+.font-cormorant {
+  font-family: 'Cormorant Garamond', serif !important;
+}
+
+/*Para texto con Charm */
+.font-charm {
+  font-family: 'Charm', cursive !important;
+}

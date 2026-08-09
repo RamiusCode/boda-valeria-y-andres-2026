@@ -1,4 +1,4 @@
----
+﻿---
 // NombresFlores.astro (ComponenteInvitacion.astro)
 ---
 
@@ -76,6 +76,10 @@
                 src="/imagenes/foto1.webp"
                 alt="Foto de los novios"
                 class="max-w-full h-auto"
+                width="1023"
+                height="1270"
+                fetchpriority="high"
+                decoding="async"
             />
 
             <!-- Viñeta superior sutil para dar profundidad -->
@@ -113,10 +117,14 @@
         <!-- Hojas decorativas a la izquierda -->
         <div id="hojas-izquierda" class="absolute top-1/2 -left-10 sm:-left-12 md:-left-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0 pointer-events-none">
             <img
-                src="/imagenes/hojas.png"
-                alt="Hojas decorativas"
+                src="/imagenes/hojas.webp"
+                alt=""
                 class="w-full h-auto object-contain"
                 style="opacity: 0.25;"
+                width="500"
+                height="862"
+                loading="lazy"
+                decoding="async"
             />
         </div>
 
@@ -126,8 +134,10 @@
             <img
                 id="aro-decorativo"
                 src="/imagenes/aro.webp"
-                alt="Aro decorativo"
+                alt=""
                 class="relative w-full h-full object-contain"
+                loading="lazy"
+                decoding="async"
             />
 
             <!-- Nombres de los novios centrados -->
@@ -334,13 +344,27 @@
         }
 
         // ═══ ROTACIÓN SUAVE DEL ARO (loop infinito) ═══
-        gsap.to("#aro-decorativo", {
+        // Se pausa cuando el aro sale de pantalla: antes seguía girando
+        // durante TODO el scroll y repintaba la imagen en cada cuadro,
+        // que es lo que hacía sentir el deslizamiento trabado.
+        const rotacionAro = gsap.to("#aro-decorativo", {
             rotation: 5,
             duration: 3,
             ease: "sine.inOut",
             yoyo: true,
             repeat: -1,
-            delay: 3
+            delay: 3,
+            paused: true
+        });
+
+        ScrollTrigger.create({
+            trigger: "#aro-decorativo",
+            start: "top bottom",
+            end: "bottom top",
+            onToggle: ({ isActive }) => {
+                if (isActive) rotacionAro.play();
+                else rotacionAro.pause();
+            }
         });
 
         console.log("✨ Animaciones completadas!");
@@ -353,16 +377,24 @@
         display: block;
     }
     
-    /* Efecto hover en letras animadas */
+    /* Efecto hover en letras animadas.
+       Sin "will-change" permanente: obligaba al celular a mantener una
+       capa de GPU por cada letra durante toda la visita. GSAP ya lo
+       activa solo mientras dura la animación. */
     .letra-animada {
-        transition: all 0.3s ease;
-        will-change: transform, opacity, filter;
         position: relative;
     }
 
-    .letra-animada:hover {
-        transform: translateY(-3px) scale(1.1) !important;
-        text-shadow: 0 0 15px rgba(129, 1, 0, 0.5) !important;
+    /* El hover solo existe con mouse; en celular no se aplica nada */
+    @media (hover: hover) {
+        .letra-animada {
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .letra-animada:hover {
+            transform: translateY(-3px) scale(1.1) !important;
+            text-shadow: 0 0 15px rgba(129, 1, 0, 0.5) !important;
+        }
     }
 
     /* Responsivo */
