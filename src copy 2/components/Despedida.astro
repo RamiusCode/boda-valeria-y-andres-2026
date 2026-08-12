@@ -7,7 +7,7 @@
     <!-- Hojas decorativas: arriba a la izquierda -->
     <div class="pointer-events-none absolute -top-6 -left-12 sm:-left-14 w-28 sm:w-36 md:w-44 z-0">
         <img
-            src="/imagenes/hojas.webp" width="500" height="862"
+            src="/imagenes/hojas.webp"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain"
             style="opacity: 0.22;"
@@ -19,7 +19,7 @@
     <!-- Hojas decorativas: abajo a la derecha -->
     <div id="despedida-hoja" class="pointer-events-none absolute -bottom-8 -right-12 sm:-right-14 w-28 sm:w-36 md:w-44 z-0">
         <img
-            src="/imagenes/hojas.webp" width="500" height="862"
+            src="/imagenes/hojas.webp"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain scale-x-[-1]"
             style="opacity: 0.22;"
@@ -45,7 +45,7 @@
                     <div class="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80">
                         <img
                             id="despedida-aro"
-                            src="/imagenes/aro.webp" width="676" height="832"
+                            src="/imagenes/aro.webp"
                             alt="Aro decorativo"
                             class="w-full h-full object-contain"
                             loading="lazy"
@@ -104,7 +104,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         console.log("💍 Iniciando animaciones de nombres en aro final...");
 
-        const stCard = { trigger: "#despedida-card", start: "top 85%", once: true };
+        const stCard = { trigger: "#despedida-card", start: "top 85%", toggleActions: "play none none reverse" };
 
         // ═══ BLOQUE FINAL ═══
         gsap.fromTo(
@@ -133,7 +133,7 @@
                 scrollTrigger: {
                     trigger: "#despedida-aro",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -173,6 +173,7 @@
                             opacity: 0;
                             display: inline-block;
                             transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
                         ">${letra}</span>`
                 )
                 .join("");
@@ -181,6 +182,7 @@
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                filter: "blur(0px)",
                 duration: 0.5,
                 ease: "power2.out",
                 stagger: { each: 0.05, from: "start" },
@@ -207,6 +209,7 @@
                             opacity: 0;
                             display: inline-block;
                             transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
                         ">${letra}</span>`
                 )
                 .join("");
@@ -215,6 +218,7 @@
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                filter: "blur(0px)",
                 duration: 0.5,
                 ease: "power2.out",
                 stagger: { each: 0.05, from: "start" },
@@ -231,7 +235,7 @@
                 scaleX: 1,
                 duration: 0.8,
                 ease: "power2.out",
-                scrollTrigger: { trigger: "#despedida-divisor", start: "top 85%", once: true }
+                scrollTrigger: { trigger: "#despedida-divisor", start: "top 85%", toggleActions: "play none none reverse" }
             }
         );
 
@@ -244,7 +248,7 @@
                 duration: 0.8,
                 ease: "power2.out",
                 delay: 0.2,
-                scrollTrigger: { trigger: "#despedida-divisor", start: "top 85%", once: true }
+                scrollTrigger: { trigger: "#despedida-divisor", start: "top 85%", toggleActions: "play none none reverse" }
             }
         );
 
@@ -259,7 +263,7 @@
                 duration: 0.9,
                 ease: "back.out(1.4)",
                 delay: 0.4,
-                scrollTrigger: { trigger: "#despedida-divisor", start: "top 85%", once: true }
+                scrollTrigger: { trigger: "#despedida-divisor", start: "top 85%", toggleActions: "play none none reverse" }
             }
         );
 

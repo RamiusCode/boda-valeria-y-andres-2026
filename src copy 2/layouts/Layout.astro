@@ -1,0 +1,169 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="es" class="m-0 p-0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Fuerza modo claro: el navegador NO debe aplicar su tema oscuro -->
+    <meta name="color-scheme" content="only light" />
+    <meta name="supported-color-schemes" content="light" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="icon" type="image/png" href="/iconos/Anillos.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+     <!-- Google Fonts: UNA sola petición con todas las familias
+          (antes eran 4 hojas de estilo bloqueantes = 4 viajes de red) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Crimson+Text:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Charm:wght@400;700&display=swap"
+    >
+
+    <style>
+      /* ═══ MODO CLARO FORZADO ═══
+         Evita que el modo oscuro del navegador/sistema invierta fondos,
+         textos, formularios o el auto-dark de Chrome en Android. */
+      :root {
+        color-scheme: only light;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+     html {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* ← Elimina scroll horizontal */
+    color-scheme: only light;
+    background-color: #FFFFFF;
+    /* Evita que iOS/Android reajusten el tamaño de texto */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden; /* ← Elimina scroll horizontal */
+    /* Fondo blanco limpio, sin degradados */
+    background-color: #FFFFFF;
+    background-image: none;
+    color: var(--negro);
+    color-scheme: only light;
+}
+
+      main {
+        background: transparent !important;
+      }
+
+      /* Los inputs/botones tampoco deben tomar el tema oscuro del sistema */
+      input,
+      textarea,
+      select,
+      button {
+        color-scheme: only light;
+      }
+
+      /* Modo de alto contraste de Windows: respeta el diseño original */
+      @media (forced-colors: active) {
+        html,
+        body {
+          forced-color-adjust: none;
+          background-color: #FFFFFF;
+        }
+      }
+
+      /* ═══════════════════════════════════════════════════════ */
+      /* 📱 SCROLL FLUIDO EN CELULARES                            */
+      /* ═══════════════════════════════════════════════════════ */
+
+      /* El scroll lo maneja el navegador de forma nativa (hilo del
+         compositor). Sin esto, iOS puede caer al scroll por JS. */
+      body {
+        -webkit-overflow-scrolling: touch;
+        /* El navegador sabe que solo hay scroll vertical -> no espera
+           a JS para decidir si el gesto es un swipe horizontal. */
+        touch-action: pan-y;
+      }
+
+      /* Las imágenes decorativas nunca deben capturar gestos táctiles */
+      img {
+        -webkit-user-drag: none;
+        user-select: none;
+      }
+
+      /* Los efectos :hover solo tienen sentido con mouse. En celular
+         solo cuestan pintado extra, así que se desactivan. */
+      @media (hover: none) {
+        section h3:hover,
+        section p:hover,
+        .letra-animada:hover {
+          transform: none !important;
+          text-shadow: none !important;
+          transition: none !important;
+        }
+      }
+
+      /* Respeta a quien pidió menos animación en su sistema */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- ⚙️ AJUSTES GLOBALES DE GSAP (deben correr ANTES que los     -->
+    <!--    scripts de cada componente, por eso van aquí en el head) -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.config({
+      // En celular, al aparecer/ocultarse la barra de direcciones el
+      // navegador dispara "resize". Sin esto, ScrollTrigger recalcula
+      // TODAS las secciones en pleno scroll -> es el tirón principal.
+      ignoreMobileResize: true,
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
+
+    // Un solo recálculo cuando ya cargaron imágenes y tipografías,
+    // en vez de recálculos sueltos mientras el usuario baja.
+    window.addEventListener("load", () => {
+      ScrollTrigger.refresh();
+    });
+
+    // Con la pestaña en segundo plano no se anima nada (ahorra batería
+    // y evita que al volver se ejecute todo lo atrasado de golpe).
+    document.addEventListener("visibilitychange", () => {
+      gsap.globalTimeline.timeScale(document.hidden ? 0 : 1);
+    });
+    </script>
+  </head>
+
+  <body class="min-h-screen m-0 p-0">
+    <main class="m-0 p-0 overflow-x-hidden">
+      <slot />
+    </main>
+  </body>
+</html>

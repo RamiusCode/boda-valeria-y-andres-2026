@@ -7,7 +7,7 @@
     <!-- Hojas decorativas a la izquierda -->
     <div class="pointer-events-none absolute top-[64%] -left-10 sm:-left-12 md:-left-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0">
         <img
-            src="/imagenes/hojas.webp" width="500" height="862"
+            src="/imagenes/hojas.webp"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain"
             style="opacity: 0.25;"
@@ -88,7 +88,7 @@
                 scrollTrigger: {
                     trigger: "#titulo-asistencia",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -105,7 +105,7 @@
                 scrollTrigger: {
                     trigger: "#texto-asistencia",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 },
                 delay: 0.3
             }
@@ -123,7 +123,7 @@
                 scrollTrigger: {
                     trigger: "#texto-fecha-limite",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 },
                 delay: 0.5
             }
@@ -141,7 +141,7 @@
                 scrollTrigger: {
                     trigger: "#boton-asistencia",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 },
                 delay: 0.7
             }

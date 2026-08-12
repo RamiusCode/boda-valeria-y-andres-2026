@@ -1,0 +1,519 @@
+---
+// Galeria.astro
+---
+
+<section class="relative w-full pt-2 pb-12 overflow-hidden bg-white">
+
+    <!-- TÍTULO ELEGANTE -->
+    <div class="text-center mb-10 px-6" id="titulo-galeria">
+
+        <!-- Ornamento superior -->
+        <div class="flex items-center justify-center gap-4 mb-5">
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-r from-transparent to-[#810100]/70"></span>
+            <span class="text-[#810100] text-sm leading-none">&#10070;</span>
+            <span class="block w-12 sm:w-16 h-px bg-gradient-to-l from-transparent to-[#810100]/70"></span>
+        </div>
+
+        <h2 class="font-great-vibes text-5xl sm:text-6xl md:text-7xl text-[#810100] tracking-wide">
+            Nuestra Historia
+        </h2>
+
+        <p class="font-serif text-xs sm:text-sm md:text-base text-[#1B1717] mt-3 tracking-[0.25em] uppercase">
+            Cada momento capturado es un tesoro eterno
+        </p>
+    </div>
+
+    <!-- SLIDER (automático + control con dedo/mouse) -->
+    <div class="slider-galeria relative w-full">
+
+        <!-- Difuminado en los bordes -->
+        <div class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-28 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+        <div id="slider-viewport" class="slider-viewport w-full overflow-x-auto">
+            <div id="slider-track" class="flex w-max select-none">
+                <!-- Las tarjetas se generan dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÓN VER GALERÍA -->
+    <div class="text-center mt-10 px-6">
+        <button
+            id="abrir-galeria"
+            class="group relative inline-flex items-center gap-3 px-9 py-3.5 bg-[#810100] text-white font-serif text-sm sm:text-base uppercase tracking-[0.2em] rounded-lg shadow-md hover:bg-[#5C0100] hover:-translate-y-0.5 transition-all duration-300"
+        >
+            <span class="pointer-events-none absolute inset-1.5 rounded border border-white/30 transition-all duration-300 group-hover:inset-[7px]"></span>
+            <svg class="relative w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.8" />
+                <circle cx="8.5" cy="8.5" r="1.5" stroke-width="1.8" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 15l-5-5L5 21" />
+            </svg>
+            <span class="relative">Ver galería</span>
+        </button>
+    </div>
+
+    <!-- 🖼️ MODAL CON CARRUSEL -->
+    <div id="modal-galeria" class="fixed inset-0 bg-black/95 backdrop-blur-3xl z-50 hidden items-center justify-center">
+
+        <!-- Botón cerrar -->
+        <button id="cerrar-modal" class="absolute top-6 right-6 md:top-10 md:right-10 w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-2xl flex items-center justify-center transition-all duration-300 z-50 border border-white/20 hover:border-white/40 hover:rotate-90">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Contenedor principal -->
+        <div class="relative w-full h-full flex items-center justify-center px-2 md:px-16 lg:px-24">
+
+            <!-- Botón anterior -->
+            <button id="btn-anterior" class="absolute left-4 md:left-8 lg:left-12 w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 hover:bg-[#810100]/30 backdrop-blur-2xl flex items-center justify-center transition-all duration-300 z-40 border border-white/20 hover:border-[#810100]/50 group hover:scale-110">
+                <svg class="w-7 h-7 text-white group-hover:-translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <!-- Contenedor de carrusel -->
+            <div class="relative max-w-6xl w-full overflow-hidden" id="modal-contenido">
+
+                <!-- Track del carrusel -->
+                <div id="carrusel-track" class="flex transition-transform duration-700 ease-out">
+                    <!-- Las imágenes se generan dinámicamente -->
+                </div>
+
+                <!-- Información de la foto -->
+                <div class="absolute top-6 left-6 md:top-8 md:left-8 z-30" id="info-foto">
+                    <div class="bg-white/10 backdrop-blur-2xl px-6 py-3 md:px-8 md:py-4 rounded-2xl border border-white/20 shadow-2xl">
+                        <p class="text-white font-charm text-base md:text-lg font-semibold" id="titulo-foto">Momento Especial</p>
+                    </div>
+                </div>
+
+                <!-- Contador -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30">
+                    <div class="bg-white/10 backdrop-blur-2xl px-8 py-4 rounded-full border border-white/20 shadow-2xl">
+                        <div class="flex items-center gap-4">
+                            <span id="numero-actual" class="text-white font-charm text-2xl md:text-3xl font-bold">1</span>
+                            <div class="w-px h-8 bg-white/30"></div>
+                            <span id="numero-total" class="text-white/60 font-charm text-xl md:text-2xl">6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Miniaturas -->
+                <div class="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 hidden md:block">
+                    <div class="flex gap-3 bg-white/5 backdrop-blur-2xl px-6 py-4 rounded-full border border-white/10">
+                        <div id="miniaturas-nav" class="flex gap-3">
+                            <!-- Se generan dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Botón siguiente -->
+            <button id="btn-siguiente" class="absolute right-4 md:right-8 lg:right-12 w-14 h-14 md:w-16 md:h-16 rounded-full bg-white/10 hover:bg-[#810100]/30 backdrop-blur-2xl flex items-center justify-center transition-all duration-300 z-40 border border-white/20 hover:border-[#810100]/50 group hover:scale-110">
+                <svg class="w-7 h-7 text-white group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- 🖼️ GALERÍA COMPLETA (todas las fotos en mosaico) -->
+    <div id="modal-galeria-completa" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 hidden overflow-y-auto">
+
+        <!-- Botón cerrar -->
+        <button id="cerrar-completa" class="fixed top-6 right-6 md:top-8 md:right-8 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-2xl flex items-center justify-center transition-all duration-300 z-50 border border-white/20 hover:border-white/40 hover:rotate-90">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="min-h-full px-4 sm:px-8 py-16">
+
+            <!-- Título -->
+            <div class="text-center mb-8">
+                <h3 class="font-great-vibes text-4xl sm:text-5xl text-[#810100]">Nuestra Historia</h3>
+                <p class="font-serif text-white/60 text-xs sm:text-sm tracking-[0.25em] uppercase mt-2">Galería completa</p>
+            </div>
+
+            <!-- Mosaico de todas las fotos -->
+            <div id="grid-completa" class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                <!-- Se genera dinámicamente -->
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (typeof window !== 'undefined') {
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("📸 Iniciando galería...");
+
+            // ═══ ANIMACIÓN DE ENTRADA (replay al bajar) ═══
+            const stGal = { start: "top 80%", toggleActions: "play none none reverse" };
+            gsap.fromTo("#titulo-galeria",
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.9, ease: "power2.out", scrollTrigger: { trigger: "#titulo-galeria", ...stGal } }
+            );
+            gsap.fromTo(".slider-galeria",
+                { opacity: 0, y: 30 },
+                { opacity: 1, y: 0, duration: 0.9, ease: "power2.out", delay: 0.15, scrollTrigger: { trigger: ".slider-galeria", ...stGal } }
+            );
+            gsap.fromTo("#abrir-galeria",
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)", delay: 0.3, scrollTrigger: { trigger: "#abrir-galeria", ...stGal } }
+            );
+
+            const fotos = [
+                { src: "/imagenes/foto1.jpg", titulo: "Momento Especial 1" },
+                { src: "/imagenes/foto2.jpg", titulo: "Momento Especial 2" },
+                { src: "/imagenes/foto3.jpg", titulo: "Momento Especial 3" },
+                { src: "/imagenes/foto4.jpg", titulo: "Momento Especial 4" }
+            ];
+
+            let indiceActual = 0;
+            const modal = document.getElementById("modal-galeria");
+            const carruselTrack = document.getElementById("carrusel-track");
+            const numeroActual = document.getElementById("numero-actual");
+            const numeroTotal = document.getElementById("numero-total");
+            const tituloFoto = document.getElementById("titulo-foto");
+            const miniaturasNav = document.getElementById("miniaturas-nav");
+            const btnAnterior = document.getElementById("btn-anterior");
+            const btnSiguiente = document.getElementById("btn-siguiente");
+            const cerrarModal = document.getElementById("cerrar-modal");
+            const sliderTrack = document.getElementById("slider-track");
+            const abrirGaleriaBtn = document.getElementById("abrir-galeria");
+
+            // ═══ Generar slides del modal ═══
+            if (carruselTrack && numeroTotal) {
+                numeroTotal.textContent = fotos.length.toString();
+                fotos.forEach((foto) => {
+                    const slide = document.createElement("div");
+                    slide.className = "min-w-full flex items-center justify-center px-4 md:px-12";
+                    slide.innerHTML = `
+                        <div class="relative max-w-5xl w-full">
+                            <div class="absolute -inset-12 bg-gradient-to-r from-[#810100]/20 via-[#810100]/30 to-[#810100]/20 rounded-3xl blur-3xl opacity-50"></div>
+                            <div class="relative backdrop-blur-sm rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
+                                <img src="${foto.src}" alt="${foto.titulo}" class="w-full h-auto max-h-[75vh] md:max-h-[82vh] object-contain bg-black/20"
+                loading="lazy"
+                decoding="async"
+            />
+                            </div>
+                        </div>
+                    `;
+                    carruselTrack.appendChild(slide);
+                });
+            }
+
+            // ═══ Miniaturas ═══
+            if (miniaturasNav) {
+                fotos.forEach((foto, index) => {
+                    const mini = document.createElement("button");
+                    mini.className = "miniatura transition-all duration-300 hover:scale-110 focus:outline-none";
+                    mini.dataset.index = index.toString();
+                    mini.innerHTML = `<div class="relative"><div class="w-3 h-3 rounded-full bg-white/30 transition-all duration-300"></div></div>`;
+                    miniaturasNav.appendChild(mini);
+                });
+            }
+
+            const actualizarCarrusel = (nuevo: number) => {
+                if (!carruselTrack) return;
+                indiceActual = (nuevo + fotos.length) % fotos.length;
+                carruselTrack.style.transform = `translateX(${-indiceActual * 100}%)`;
+                if (numeroActual) numeroActual.textContent = (indiceActual + 1).toString();
+                if (tituloFoto) tituloFoto.textContent = fotos[indiceActual].titulo;
+
+                document.querySelectorAll('.miniatura').forEach((mini, idx) => {
+                    const dot = mini.querySelector('div > div') as HTMLElement | null;
+                    if (dot) {
+                        if (idx === indiceActual) {
+                            dot.style.width = '2rem';
+                            dot.style.height = '0.75rem';
+                            dot.style.backgroundColor = '#810100';
+                        } else {
+                            dot.style.width = '0.75rem';
+                            dot.style.height = '0.75rem';
+                            dot.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                        }
+                    }
+                });
+            };
+
+            const abrirModal = (indice: number) => {
+                if (!modal) return;
+                indiceActual = indice;
+                modal.classList.remove("hidden");
+                modal.classList.add("flex");
+                document.body.style.overflow = 'hidden';
+                actualizarCarrusel(indice);
+            };
+
+            const cerrarModalFn = () => {
+                if (!modal) return;
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+                document.body.style.overflow = '';
+            };
+
+            // ═══ Generar tarjetas del slider (doble juego para bucle continuo) ═══
+            const sliderViewport = document.getElementById("slider-viewport");
+            let dragMoved = false;
+
+            if (sliderTrack) {
+                const crearCard = (foto: {src: string, titulo: string}, index: number) => {
+                    const card = document.createElement("button");
+                    card.className = "slider-card group relative shrink-0 w-52 sm:w-60 md:w-72 aspect-[3/4] mr-4 sm:mr-6 rounded-2xl overflow-hidden shadow-md border border-[#810100]/20 focus:outline-none";
+                    card.dataset.index = index.toString();
+                    card.innerHTML = `
+                        <img src="${foto.src}" alt="${foto.titulo}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none" loading="lazy" draggable="false" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-70"></div>
+                        <span class="pointer-events-none absolute inset-2 border border-white/30 rounded-xl"></span>
+                    `;
+                    card.addEventListener("click", () => { if (dragMoved) return; abrirModal(index); });
+                    return card;
+                };
+                [...fotos, ...fotos].forEach((foto, i) => {
+                    sliderTrack.appendChild(crearCard(foto, i % fotos.length));
+                });
+            }
+
+            // ═══ Auto-scroll + control con dedo / mouse ═══
+            if (sliderViewport && sliderTrack) {
+                let half = 0;
+                const computeHalf = () => { half = sliderTrack.scrollWidth / 2; };
+                const normalize = () => {
+                    if (!half) return;
+                    if (sliderViewport.scrollLeft >= half) sliderViewport.scrollLeft -= half;
+                    else if (sliderViewport.scrollLeft <= 0) sliderViewport.scrollLeft += half;
+                };
+
+                let autoScroll = true;
+                let isDown = false;
+                let startX = 0;
+                let startScroll = 0;
+                let idleTimer: ReturnType<typeof setTimeout>;
+
+                const pauseAuto = (ms = 3000) => {
+                    autoScroll = false;
+                    clearTimeout(idleTimer);
+                    idleTimer = setTimeout(() => { autoScroll = true; }, ms);
+                };
+
+                const tick = () => {
+                    if (autoScroll && !isDown) {
+                        sliderViewport.scrollLeft += 0.5; // velocidad suave (derecha → izquierda)
+                        normalize();
+                    }
+                    requestAnimationFrame(tick);
+                };
+
+                const init = () => {
+                    computeHalf();
+                    sliderViewport.scrollLeft = half / 2; // permite mover a ambos lados
+                };
+                computeHalf();
+                setTimeout(init, 200);
+                window.addEventListener("load", init);
+                window.addEventListener("resize", computeHalf);
+                requestAnimationFrame(tick);
+
+                // Arrastre con MOUSE
+                sliderViewport.addEventListener("pointerdown", (e) => {
+                    if (e.pointerType !== "mouse") return; // en táctil usa el scroll nativo
+                    isDown = true;
+                    dragMoved = false;
+                    startX = e.clientX;
+                    startScroll = sliderViewport.scrollLeft;
+                    sliderViewport.classList.add("dragging");
+                    pauseAuto();
+                });
+                window.addEventListener("pointermove", (e) => {
+                    if (!isDown) return;
+                    const dx = e.clientX - startX;
+                    if (Math.abs(dx) > 6) dragMoved = true;
+                    sliderViewport.scrollLeft = startScroll - dx;
+                    normalize();
+                });
+                window.addEventListener("pointerup", () => {
+                    if (!isDown) return;
+                    isDown = false;
+                    sliderViewport.classList.remove("dragging");
+                    pauseAuto();
+                    setTimeout(() => { dragMoved = false; }, 60);
+                });
+
+                // Pausa al pasar el mouse por encima
+                sliderViewport.addEventListener("mouseenter", () => { if (!isDown) autoScroll = false; });
+                sliderViewport.addEventListener("mouseleave", () => { if (!isDown) { clearTimeout(idleTimer); autoScroll = true; } });
+
+                // Táctil / rueda
+                sliderViewport.addEventListener("touchstart", () => pauseAuto(), { passive: true });
+                sliderViewport.addEventListener("scroll", normalize, { passive: true });
+                sliderViewport.addEventListener("wheel", () => pauseAuto(), { passive: true });
+            }
+
+            // ═══ Galería completa (mosaico con todas las fotos) ═══
+            const modalCompleta = document.getElementById("modal-galeria-completa");
+            const gridCompleta = document.getElementById("grid-completa");
+            const cerrarCompleta = document.getElementById("cerrar-completa");
+
+            const abrirCompleta = () => {
+                if (!modalCompleta) return;
+                modalCompleta.classList.remove("hidden");
+                modalCompleta.classList.add("block");
+                document.body.style.overflow = "hidden";
+            };
+            const cerrarCompletaFn = () => {
+                if (!modalCompleta) return;
+                modalCompleta.classList.add("hidden");
+                modalCompleta.classList.remove("block");
+                document.body.style.overflow = "";
+            };
+
+            if (gridCompleta) {
+                fotos.forEach((foto, index) => {
+                    const item = document.createElement("button");
+                    item.className = "grid-item group relative aspect-square rounded-xl overflow-hidden shadow-md focus:outline-none";
+                    item.innerHTML = `
+                        <img src="${foto.src}" alt="${foto.titulo}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300"></div>
+                        <span class="pointer-events-none absolute inset-2 border border-white/0 group-hover:border-white/40 rounded-lg transition-all duration-300"></span>
+                    `;
+                    item.addEventListener("click", () => { cerrarCompletaFn(); abrirModal(index); });
+                    gridCompleta.appendChild(item);
+                });
+            }
+
+            // ═══ Eventos ═══
+            abrirGaleriaBtn?.addEventListener("click", abrirCompleta);
+            cerrarCompleta?.addEventListener("click", cerrarCompletaFn);
+            modalCompleta?.addEventListener("click", (e) => { if (e.target === modalCompleta) cerrarCompletaFn(); });
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && modalCompleta && !modalCompleta.classList.contains("hidden")) cerrarCompletaFn();
+            });
+
+            btnAnterior?.addEventListener("click", (e) => { e.stopPropagation(); actualizarCarrusel(indiceActual - 1); });
+            btnSiguiente?.addEventListener("click", (e) => { e.stopPropagation(); actualizarCarrusel(indiceActual + 1); });
+
+            document.querySelectorAll('.miniatura').forEach(mini => {
+                mini.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    actualizarCarrusel(parseInt((mini as HTMLElement).dataset.index || "0"));
+                });
+            });
+
+            cerrarModal?.addEventListener("click", (e) => { e.stopPropagation(); cerrarModalFn(); });
+
+            document.addEventListener("keydown", (e) => {
+                if (modal && !modal.classList.contains("hidden")) {
+                    if (e.key === "Escape") cerrarModalFn();
+                    else if (e.key === "ArrowLeft") actualizarCarrusel(indiceActual - 1);
+                    else if (e.key === "ArrowRight") actualizarCarrusel(indiceActual + 1);
+                }
+            });
+
+            modal?.addEventListener("click", (e) => { if (e.target === modal) cerrarModalFn(); });
+
+            // 📱 Swipe táctil
+            let touchStartX = 0, touchEndX = 0, touchStartY = 0, touchEndY = 0, isDragging = false;
+            const handleSwipe = () => {
+                const diffX = touchStartX - touchEndX;
+                const diffY = Math.abs(touchStartY - touchEndY);
+                if (Math.abs(diffX) > 60 && Math.abs(diffX) > diffY * 2) {
+                    if (diffX > 0) actualizarCarrusel(indiceActual + 1);
+                    else actualizarCarrusel(indiceActual - 1);
+                }
+            };
+            modal?.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; isDragging = true;
+            }, { passive: true });
+            modal?.addEventListener('touchmove', (e) => {
+                if (isDragging) { touchEndX = e.touches[0].clientX; touchEndY = e.touches[0].clientY; }
+            }, { passive: true });
+            modal?.addEventListener('touchend', () => {
+                if (isDragging) { handleSwipe(); isDragging = false; }
+            });
+
+            console.log("📸✨ ¡Galería lista!");
+        });
+    }
+</script>
+
+<style>
+    /* ═══ Slider desplazable ═══ */
+    .slider-viewport {
+        cursor: grab;
+        -ms-overflow-style: none;      /* Edge/IE: ocultar scrollbar */
+        scrollbar-width: none;         /* Firefox: ocultar scrollbar */
+        scroll-behavior: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .slider-viewport::-webkit-scrollbar {
+        display: none;                 /* Chrome/Safari: ocultar scrollbar */
+    }
+
+    .slider-viewport.dragging {
+        cursor: grabbing;
+    }
+
+    #slider-track {
+        will-change: transform;
+    }
+
+    .slider-card {
+        cursor: pointer;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .slider-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px -18px rgba(129, 1, 0, 0.5);
+    }
+
+    /* ═══ Modal ═══ */
+    #carrusel-track,
+    #carrusel-track img {
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+
+    .miniatura { cursor: pointer; }
+
+    #modal-galeria button {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    #modal-galeria button:active { transform: scale(0.95); }
+
+    button:focus-visible {
+        outline: 2px solid #810100;
+        outline-offset: 3px;
+    }
+
+    .slider-card,
+    .miniatura,
+    button {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+
+    #modal-galeria {
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        transition: opacity 0.3s ease;
+    }
+</style>

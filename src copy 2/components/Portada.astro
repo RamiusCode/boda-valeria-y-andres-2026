@@ -1,0 +1,363 @@
+---
+// Portada.astro
+---
+
+<section
+    id="portada-bienvenida"
+    class="fixed inset-0 z-50 overflow-hidden bg-white flex items-center justify-center"
+>
+    <!-- ═══ SOBRE DE FONDO (sobre2.png) - cubre toda la pantalla ═══ -->
+    <div id="sobre-fondo"></div>
+
+    <!-- ═══ LIENZO: mantiene la proporción del contenido en cualquier pantalla ═══ -->
+    <div id="portada-lienzo">
+
+        <!-- ═══ CONTENIDO ═══ -->
+        <div class="portada-contenido">
+
+            <!-- Título superior -->
+            <h1 id="portada-titulo" class="font-serif-boda">
+                ¡Nos Casamos!
+            </h1>
+
+            <!-- Sello de lacre (botón de ingreso) -->
+            <div class="portada-centro">
+                <button
+                    id="btn-sello"
+                    type="button"
+                    aria-label="Dale clic al sello para ingresar a la invitación"
+                >
+                    <img
+                        id="sello-img"
+                        src="/imagenes/boton.png"
+                        alt="Sello de lacre V&A"
+                    />
+                </button>
+            </div>
+
+            <!-- Bloque inferior -->
+            <div id="portada-pie">
+
+                <p class="pie-instruccion font-serif-boda">
+                    Dale clic al sello
+                </p>
+
+                <p class="pie-detalle font-serif-boda">
+                    para ingresar a la invitación
+                </p>
+
+                <!-- Separador con los colores del sobre (rojo · azul) -->
+                <span class="pie-separador">
+                    <span class="linea linea-izq"></span>
+                    <span class="rombo"></span>
+                    <span class="linea linea-der"></span>
+                </span>
+
+                <p class="pie-atentamente font-serif-boda">
+                    Atentamente:
+                </p>
+
+                <h2 id="portada-nombres" class="font-great-vibes">
+                    Valeria <span class="amp">&amp;</span> Andrés
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log("💌 Iniciando animaciones de portada...");
+
+        const portada = document.getElementById('portada-bienvenida');
+        const btnSello = document.getElementById('btn-sello');
+
+        // ═══ SOBRE DE FONDO - Zoom muy sutil al entrar ═══
+        gsap.fromTo(
+            "#sobre-fondo",
+            { opacity: 0, scale: 1.08 },
+            { opacity: 1, scale: 1, duration: 1.4, ease: "power2.out" }
+        );
+
+        // ═══ TÍTULO "¡NOS CASAMOS!" ═══
+        gsap.fromTo(
+            "#portada-titulo",
+            { opacity: 0, y: -25, letterSpacing: "0.5em" },
+            { opacity: 1, y: 0, letterSpacing: "0.22em", duration: 1.1, ease: "power2.out", delay: 0.4 }
+        );
+
+        // ═══ SELLO DE LACRE - Entrada tipo "estampado" ═══
+        gsap.fromTo(
+            "#btn-sello",
+            { opacity: 0, scale: 1.7, rotation: -12 },
+            { opacity: 1, scale: 1, rotation: 0, duration: 0.9, ease: "back.out(1.4)", delay: 0.8 }
+        );
+
+        // ═══ LATIDO SUAVE DEL SELLO (loop infinito) ═══
+        gsap.to("#sello-img", {
+            scale: 1.05,
+            duration: 1.6,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1,
+            delay: 1.9
+        });
+
+        // ═══ TEXTOS INFERIORES ═══
+        gsap.fromTo(
+            "#portada-pie",
+            { opacity: 0, y: 25 },
+            { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 1.2 }
+        );
+
+        // ═══ CLIC EN EL SELLO → ENTRAR A LA INVITACIÓN ═══
+        let abriendo = false;
+
+        btnSello?.addEventListener('click', () => {
+            if (abriendo) return;
+            abriendo = true;
+
+            console.log("🚪 Abriendo la invitación...");
+
+            // 🎵 Iniciar la música SOLO ahora, al presionar el sello
+            window.dispatchEvent(new CustomEvent('iniciar-musica'));
+
+            // Detener el latido del sello
+            gsap.killTweensOf("#sello-img");
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    portada?.remove();
+
+                    // Ir al primer componente de la invitación
+                    const destino = document.getElementById('nombresflores');
+                    if (destino) {
+                        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+
+                    console.log("✅ Portada cerrada");
+                }
+            });
+
+            // El sello se "rompe": crece y se desvanece
+            tl.to("#sello-img", {
+                scale: 1.35,
+                rotation: 8,
+                opacity: 0,
+                duration: 0.5,
+                ease: "power2.in"
+            })
+            // Los textos se van
+            .to(["#portada-titulo", "#portada-pie"], {
+                opacity: 0,
+                y: -15,
+                duration: 0.35,
+                ease: "power2.in"
+            }, "-=0.35")
+            // La portada completa se abre y desaparece
+            .to(portada, {
+                opacity: 0,
+                scale: 1.12,
+                duration: 0.65,
+                ease: "power2.inOut"
+            }, "-=0.15");
+        });
+
+        console.log("✨ Animaciones de portada completadas!");
+    });
+</script>
+
+<style>
+    /* Fuentes personalizadas */
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    .font-great-vibes {
+        font-family: 'Great Vibes', cursive;
+    }
+
+    .font-serif-boda {
+        font-family: 'Cormorant Garamond', 'Crimson Text', Georgia, serif;
+    }
+
+    /* ═══ LIENZO ═══
+       Mantiene SIEMPRE la proporción del sobre (1067 × 1600).
+       El ancho es el menor entre el ancho de la pantalla y el que cabe
+       en su altura, así nunca se recorta ni se deforma la imagen.       */
+    #portada-lienzo {
+        position: relative;
+        width: min(100vw, calc(100dvh * 1067 / 1600));
+        height: 100dvh;
+        max-width: 100vw;
+        container-type: inline-size;
+    }
+
+    /* Sobre de fondo */
+    #sobre-fondo {
+        position: absolute;
+        inset: 0;
+        background-image: url('/imagenes/sobre2.webp');
+        background-color: #FFFFFF;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        will-change: transform, opacity;
+    }
+
+    /* Contenido sobre el lienzo: todo en cqw = 1% del ancho del lienzo */
+    .portada-contenido {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        padding: 11% 6% 8%;
+    }
+
+    #portada-titulo {
+        color: #1B1717;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.22em;
+        line-height: 1.2;
+        font-size: 1.5rem;
+        font-size: 6.4cqw;
+    }
+
+    .portada-centro {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #btn-sello {
+        display: block;
+        width: 30cqw;
+        margin-top: 41cqw;
+        cursor: pointer;
+        user-select: none;
+        background: none;
+        border: none;
+        padding: 0;
+    }
+
+    #sello-img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    #portada-pie {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pie-instruccion {
+        color: #8E1116;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        line-height: 1.35;
+        font-size: 1.05rem;
+        font-size: 4.5cqw;
+    }
+
+    .pie-detalle {
+        color: #1B1717;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        line-height: 1.35;
+        font-size: 0.95rem;
+        font-size: 4cqw;
+    }
+
+    .pie-separador {
+        display: flex;
+        align-items: center;
+        gap: 2cqw;
+        margin: 3cqw 0;
+    }
+
+    .pie-separador .linea {
+        display: block;
+        width: 10cqw;
+        height: 1px;
+    }
+
+    .pie-separador .linea-izq {
+        background: linear-gradient(to right, transparent, rgba(142, 17, 22, 0.7));
+    }
+
+    .pie-separador .linea-der {
+        background: linear-gradient(to left, transparent, rgba(142, 17, 22, 0.7));
+    }
+
+    .pie-separador .rombo {
+        display: block;
+        width: 1.6cqw;
+        height: 1.6cqw;
+        background: #1B1717;
+        transform: rotate(45deg);
+    }
+
+    .pie-atentamente {
+        color: #1B1717;
+        font-weight: 400;
+        line-height: 1.35;
+        font-size: 1.35rem;
+        font-size: 5.4cqw;
+    }
+
+    #portada-nombres {
+        color: #8E1116;
+        line-height: 1.25;
+        font-size: 2.8rem;
+        font-size: 11.8cqw;
+    }
+
+    #portada-nombres .amp {
+        font-size: 0.7em;
+    }
+
+    /* Interacción del sello */
+    #btn-sello {
+        transition: transform 0.3s ease;
+    }
+
+    #btn-sello:active {
+        transform: scale(0.94);
+    }
+
+    #btn-sello:focus-visible {
+        outline: 2px solid rgba(129, 1, 0, 0.6);
+        outline-offset: 8px;
+        border-radius: 9999px;
+    }
+
+    /* Prevenir scroll mientras está la portada */
+    body:has(#portada-bienvenida) {
+        overflow: hidden;
+    }
+
+    /* Optimización de rendimiento */
+    #sello-img {
+        backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+</style>

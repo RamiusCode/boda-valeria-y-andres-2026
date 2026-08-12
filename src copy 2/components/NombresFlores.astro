@@ -73,9 +73,11 @@
         <div class="relative w-fit max-w-full mx-auto">
             <img
                 id="imagen-principal"
-                src="/imagenes/foto1.webp" width="1535" height="1024"
+                src="/imagenes/foto1.webp"
                 alt="Foto de los novios"
                 class="max-w-full h-auto"
+                width="1023"
+                height="1270"
                 fetchpriority="high"
                 decoding="async"
             />
@@ -115,10 +117,12 @@
         <!-- Hojas decorativas a la izquierda -->
         <div id="hojas-izquierda" class="absolute top-1/2 -left-10 sm:-left-12 md:-left-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0 pointer-events-none">
             <img
-                src="/imagenes/hojas.webp" width="500" height="862"
+                src="/imagenes/hojas.webp"
                 alt=""
                 class="w-full h-auto object-contain"
                 style="opacity: 0.25;"
+                width="500"
+                height="862"
                 loading="lazy"
                 decoding="async"
             />
@@ -129,7 +133,7 @@
             <!-- Imagen del aro -->
             <img
                 id="aro-decorativo"
-                src="/imagenes/aro.webp" width="676" height="832"
+                src="/imagenes/aro.webp"
                 alt=""
                 class="relative w-full h-full object-contain"
                 loading="lazy"
@@ -164,7 +168,7 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const stNF = { trigger: "#nombresflores", start: "top 80%", once: true };
+    const stNF = { trigger: "#nombresflores", start: "top 80%", toggleActions: "play none none reverse" };
 
     document.addEventListener("DOMContentLoaded", () => {
         console.log("🎊 Iniciando animaciones de invitación...");
@@ -286,6 +290,7 @@
                             opacity: 0; 
                             display: inline-block; 
                             transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
                         ">${letra}</span>`
                 )
                 .join("");
@@ -294,6 +299,7 @@
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                filter: "blur(0px)",
                 duration: 0.5,
                 ease: "power2.out",
                 stagger: { each: 0.05, from: "start" },
@@ -320,6 +326,7 @@
                             opacity: 0; 
                             display: inline-block; 
                             transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
                         ">${letra}</span>`
                 )
                 .join("");
@@ -328,6 +335,7 @@
                 opacity: 1,
                 y: 0,
                 scale: 1,
+                filter: "blur(0px)",
                 duration: 0.5,
                 ease: "power2.out",
                 stagger: { each: 0.05, from: "start" },

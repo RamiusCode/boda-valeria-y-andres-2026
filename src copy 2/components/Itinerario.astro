@@ -15,7 +15,7 @@ const eventos = [
     <!-- Hojas decorativas: derecha (arriba) -->
     <div class="pointer-events-none absolute top-[22%] -right-8 sm:-right-10 -translate-y-1/2 w-20 sm:w-24 md:w-28 z-0">
         <img
-            src="/imagenes/hojas.webp" width="500" height="862"
+            src="/imagenes/hojas.webp"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain scale-x-[-1]"
             style="opacity: 0.25;"
@@ -27,7 +27,7 @@ const eventos = [
     <!-- Hojas decorativas: izquierda (abajo) -->
     <div class="pointer-events-none absolute top-[75%] -left-8 sm:-left-10 -translate-y-1/2 w-20 sm:w-24 md:w-28 z-0">
         <img
-            src="/imagenes/hojas.webp" width="500" height="862"
+            src="/imagenes/hojas.webp"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain"
             style="opacity: 0.25;"
@@ -159,14 +159,8 @@ const eventos = [
         font-family: "Great Vibes", cursive;
     }
 
-    /* Propiedades concretas, nunca "all": GSAP escribe transform/opacity en
-       línea en cada frame y con "all" el navegador arranca una transición
-       nueva por frame (recalculo de estilos constante mientras se scrollea). */
     .evento-item p {
-        transition:
-            color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-            transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-            text-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .evento-item:hover p:first-of-type {
@@ -177,9 +171,7 @@ const eventos = [
 
     .corazon-item {
         filter: drop-shadow(0 4px 12px rgba(129, 1, 0, 0.5));
-        transition:
-            transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-            filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .corazon-item:hover {
@@ -237,14 +229,13 @@ const eventos = [
             },
         });
 
-        // ✨ ANIMACIÓN DEL ITINERARIO (solo una vez)
-        //    Antes se rehacía en cada pasada: al subir reseteaba 11 elementos
-        //    y al bajar los volvía a animar, justo mientras el dedo scrolleaba.
+        // ✨ ANIMACIÓN DEL ITINERARIO - SE REPITE AL BAJAR/SUBIR
         ScrollTrigger.create({
             trigger: "#eventos-container",
             start: "top 80%",
-            once: true,
+            end: "top 20%",
 
+            // Al bajar (entrar)
             onEnter: () => {
                 const tl = gsap.timeline();
 
@@ -302,18 +293,66 @@ const eventos = [
                         0,
                     );
             },
+
+            // Al subir (salir)
+            onLeaveBack: () => {
+                const tl = gsap.timeline();
+
+                // Resetea TODO AL MISMO TIEMPO
+                tl.to(
+                    ".linea-central, .corazon-item, .evento-item",
+                    {
+                        opacity: 0,
+                        duration: 0.4,
+                        ease: "power2.in",
+                    },
+                    0,
+                )
+
+                    .to(
+                        ".linea-central",
+                        {
+                            scaleY: 0,
+                            duration: 0.4,
+                            ease: "power2.in",
+                            transformOrigin: "top center",
+                        },
+                        0,
+                    )
+
+                    .to(
+                        ".corazon-item",
+                        {
+                            scale: 0,
+                            duration: 0.4,
+                            ease: "power2.in",
+                        },
+                        0,
+                    )
+
+                    .to(
+                        ".imagen-izq, .texto-izq",
+                        {
+                            x: -60,
+                            duration: 0.4,
+                            ease: "power2.in",
+                        },
+                        0,
+                    )
+
+                    .to(
+                        ".imagen-der, .texto-der",
+                        {
+                            x: 60,
+                            duration: 0.4,
+                            ease: "power2.in",
+                        },
+                        0,
+                    );
+            },
         });
     };
 
-    // Guardia: si se dispararan los dos eventos, se crearían ScrollTriggers
-    // duplicados y todo el itinerario se animaría dos veces.
-    let itinerarioListo = false;
-    const initItinerarioUnaVez = () => {
-        if (itinerarioListo) return;
-        itinerarioListo = true;
-        initItinerario();
-    };
-
-    document.addEventListener("DOMContentLoaded", initItinerarioUnaVez);
-    document.addEventListener("astro:page-load", initItinerarioUnaVez);
+    document.addEventListener("DOMContentLoaded", initItinerario);
+    document.addEventListener("astro:page-load", initItinerario);
 </script>

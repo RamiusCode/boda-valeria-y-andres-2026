@@ -7,7 +7,7 @@
     <!-- Hojas decorativas a la derecha -->
     <div class="pointer-events-none absolute top-1/2 -right-10 sm:-right-12 md:-right-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0">
         <img
-            src="/imagenes/hojas.webp"
+            src="/imagenes/hojas.webp" width="500" height="862"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain scale-x-[-1]"
             style="opacity: 0.25;"
@@ -29,10 +29,10 @@
 
             <div class="relative">
 
-                <!-- Título "Recepción" -->
+                <!-- Título "Ceremonia civil y recepción social" -->
                 <div id="titulo-ceremonia" class="mb-2">
-                    <h3 class="font-great-vibes text-[clamp(2.1rem,8.8vw,3.5rem)] leading-tight text-[#810100] tracking-wide whitespace-nowrap">
-                        Recepción Social
+                    <h3 class="font-great-vibes text-[clamp(1.9rem,7.2vw,2.9rem)] leading-tight text-[#810100] tracking-wide">
+                        Ceremonia civil<br />y recepción social
                     </h3>
                 </div>
 
@@ -61,7 +61,7 @@
                 <div id="hora-ceremonia" class="mb-6">
                     <p class="text-sm sm:text-base md:text-lg text-[#1B1717] uppercase tracking-[0.25em] font-serif mb-2">Hora</p>
                     <p class="text-[#810100] text-[clamp(1.35rem,5.5vw,1.8rem)] font-serif tracking-wide leading-none">
-                        16:00
+                        15:30
                     </p>
                 </div>
 
@@ -110,7 +110,7 @@
                 scrollTrigger: {
                     trigger: "#ceremonia-card",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    once: true
                 }
             }
         );
@@ -128,7 +128,7 @@
                 scrollTrigger: {
                     trigger: "#ceremonia-card",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    once: true
                 },
                 delay: 0.3
             }
@@ -146,7 +146,7 @@
                 scrollTrigger: {
                     trigger: "#ceremonia-card",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    once: true
                 },
                 delay: 0.6
             }
@@ -164,7 +164,7 @@
                 scrollTrigger: {
                     trigger: "#ceremonia-card",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    once: true
                 },
                 delay: 0.9
             }
@@ -182,7 +182,7 @@
                 scrollTrigger: {
                     trigger: "#ceremonia-card",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    once: true
                 },
                 delay: 1.2
             }
@@ -200,7 +200,7 @@
                 scrollTrigger: {
                     trigger: "#ceremonia-card",
                     start: "top 80%",
-                    toggleActions: "play none none reverse"
+                    once: true
                 },
                 delay: 1.5
             }
@@ -213,7 +213,7 @@
 <style>
     /* Transiciones suaves en la tarjeta */
     #ceremonia-card {
-        transition: all 0.3s ease;
+        transition: box-shadow 0.3s ease;
     }
 
     #ceremonia-card:hover {

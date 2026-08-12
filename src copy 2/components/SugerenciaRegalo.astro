@@ -48,7 +48,7 @@ const enlaceWhatsapp = `https://wa.me/${whatsapp}?text=${encodeURIComponent(mens
         <div id="logo-regalo" class="mb-8 w-full max-w-xs">
             <div class="bg-white rounded-2xl px-5 py-4 shadow-lg">
                 <img
-                    src="/imagenes/logo.png" width="1054" height="353"
+                    src="/imagenes/logo.png"
                     alt="Nuestra Boda HomeStore"
                     class="w-full h-auto object-contain"
                 loading="lazy"
@@ -93,7 +93,7 @@ const enlaceWhatsapp = `https://wa.me/${whatsapp}?text=${encodeURIComponent(mens
     document.addEventListener("DOMContentLoaded", () => {
         console.log("🎁 Iniciando animaciones de sugerencia de regalo...");
 
-        const st = { trigger: "#titulo-regalo", start: "top 85%", once: true };
+        const st = { trigger: "#titulo-regalo", start: "top 85%", toggleActions: "play none none reverse" };
 
         // ═══ TÍTULO ═══
         gsap.fromTo(

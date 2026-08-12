@@ -7,7 +7,7 @@
     <!-- Hojas decorativas (copia de NombresFlores) detrás de toda la tarjeta, a la derecha -->
     <div id="hojas-contador" class="absolute top-1/2 -right-10 sm:-right-12 md:-right-14 -translate-y-1/2 w-28 sm:w-36 md:w-44 z-0 pointer-events-none">
         <img
-            src="/imagenes/hojas.webp" width="500" height="862"
+            src="/imagenes/hojas.webp"
             alt="Hojas decorativas"
             class="w-full h-auto object-contain scale-x-[-1]"
             style="opacity: 0.25;"
@@ -129,29 +129,12 @@
             minutosEl.textContent = minutos.toString().padStart(2, "0");
             segundosEl.textContent = segundos.toString().padStart(2, "0");
 
-            // El latido de los segundos SOLO si el contador está a la vista y
-            // la pestaña activa. Antes se creaba un tween por segundo siempre;
-            // con la pestaña en segundo plano (globalTimeline en pausa) se
-            // acumulaban cientos y al volver corrían todos de golpe.
-            if (contadorVisible && !document.hidden) {
-                gsap.fromTo(
-                    segundosEl,
-                    { scale: 1.2, color: "#810100" },
-                    { scale: 1, color: "#1B1717", duration: 0.3, ease: "power2.out" }
-                );
-            }
-        }
-
-        // ¿El contador está en pantalla? Lo decide el navegador, no el scroll.
-        let contadorVisible = false;
-        const contadorEl = document.getElementById("contador-container");
-        if (contadorEl) {
-            new IntersectionObserver(
-                ([entrada]) => {
-                    contadorVisible = entrada.isIntersecting;
-                },
-                { rootMargin: "100px" }
-            ).observe(contadorEl);
+            // Animación en los segundos cada vez que cambian
+            gsap.fromTo(
+                segundosEl,
+                { scale: 1.2, color: "#810100" },
+                { scale: 1, color: "#1B1717", duration: 0.3, ease: "power2.out" }
+            );
         }
 
         // Actualizar cada segundo
@@ -171,7 +154,7 @@
                 scrollTrigger: {
                     trigger: "#contador-container",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -189,7 +172,7 @@
                 scrollTrigger: {
                     trigger: "#contador-container",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 },
                 delay: 0.5
             }
@@ -198,13 +181,14 @@
         // ═══ LÍNEA SUPERIOR Y DIVISOR ═══
         gsap.fromTo(
             "#contador-overline",
-            { opacity: 0, y: -20 },
+            { opacity: 0, y: -20, letterSpacing: "0.7em" },
             {
                 opacity: 1,
                 y: 0,
+                letterSpacing: "0.4em",
                 duration: 0.9,
                 ease: "power2.out",
-                scrollTrigger: { trigger: "#contador-overline", start: "top 85%", once: true }
+                scrollTrigger: { trigger: "#contador-overline", start: "top 85%", toggleActions: "play none none reverse" }
             }
         );
 
@@ -217,7 +201,7 @@
                 duration: 0.8,
                 ease: "power2.out",
                 delay: 0.2,
-                scrollTrigger: { trigger: "#contador-overline", start: "top 85%", once: true }
+                scrollTrigger: { trigger: "#contador-overline", start: "top 85%", toggleActions: "play none none reverse" }
             }
         );
 
@@ -226,11 +210,9 @@
 </script>
 
 <style>
-    /* Transiciones suaves.
-       Nunca "all": GSAP escribe transform/opacity en línea en cada frame y
-       con "all" el navegador abre una transición nueva por frame. */
+    /* Transiciones suaves */
     #contador-container {
-        transition: box-shadow 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     /* Efecto hover en las cajas */

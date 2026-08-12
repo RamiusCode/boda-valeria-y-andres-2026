@@ -80,7 +80,7 @@
                 scrollTrigger: {
                     trigger: "#titulo-nos-casamos",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -98,7 +98,7 @@
                 scrollTrigger: {
                     trigger: "#dia-numero",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -116,7 +116,7 @@
                 scrollTrigger: {
                     trigger: "#dia-numero",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -135,7 +135,7 @@
                 scrollTrigger: {
                     trigger: "#dia-numero",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -153,7 +153,7 @@
                 scrollTrigger: {
                     trigger: "#mes-anio",
                     start: "top 80%",
-                    once: true
+                    toggleActions: "play none none reverse"
                 }
             }
         );
@@ -163,13 +163,9 @@
 </script>
 
 <style>
-    /* Transiciones suaves SOLO en lo que tiene hover.
-       Antes era "section * { transition: all }": cada elemento de la sección
-       abría una transición por cada cambio que GSAP escribía en línea,
-       frame a frame. Era el recálculo de estilos más caro de la página. */
-    #dia-numero,
-    #mes-anio {
-        transition: transform 0.3s ease;
+    /* Transiciones suaves */
+    section * {
+        transition: all 0.3s ease;
     }
 
     /* Efecto hover en el día */

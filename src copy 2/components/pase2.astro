@@ -124,7 +124,7 @@ const textoMensaje = mensaje ?? mensajePorDefecto;
     document.addEventListener("DOMContentLoaded", () => {
         console.log("🎟️ Iniciando animaciones de pase...");
 
-        const st = { trigger: "#pase-container", start: "top 80%", once: true };
+        const st = { trigger: "#pase-container", start: "top 80%", toggleActions: "play none none reverse" };
 
         // ═══ TARJETA PRINCIPAL ═══
         gsap.fromTo(
@@ -141,12 +141,10 @@ const textoMensaje = mensaje ?? mensajePorDefecto;
         );
 
         // ═══ "PASES ASIGNADOS" ═══
-        // Sin animar letter-spacing: cambiarlo obliga a recalcular el layout
-        // del texto en cada frame. Con opacity + y el efecto va en el compositor.
         gsap.fromTo(
             "#texto-reservado",
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", scrollTrigger: st, delay: 0.6 }
+            { opacity: 0, letterSpacing: "0.6em" },
+            { opacity: 1, letterSpacing: "0.3em", duration: 0.8, ease: "power2.out", scrollTrigger: st, delay: 0.6 }
         );
 
         // ═══ NÚMERO DE PASES ═══
@@ -187,7 +185,7 @@ const textoMensaje = mensaje ?? mensajePorDefecto;
     }
 
     #pase-container {
-        transition: box-shadow 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     #numero-pase {
